@@ -2,87 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign-Up Page</title>
 </head>
 <body>
     
-    <form id="Sign-Up">
+    <form id="Sign-Up" onsubmit="return requirement(event)">
 
         <fieldset form="Sign-Up">
 
             <!--Name-->
-            <label for="Firstname"></label>
-            <input type="text" id="Firstname" name="Firstname" placeholder="First name*" >
+            <label for="Firstname"><span id="Firstname-required" style="color: red;"></span></label>
+            <input type="text" id="Firstname" name="Firstname" placeholder="First name*">
 
-            <label for="Lastname"></label>
-            <input type="text" id="Lastname" name="Lastname" placeholder="Last name*">
+            <label for="Lastname"><span id="Lastname-required" style="color: red;"></span></label>
+            <input type="text" id="Lastname" name="Lastname" placeholder="Last name*"><br>
 
             <!--EmailAdd-->
-            <label for="EmailAdd"></label></br></br>
+            <label for="EmailAdd"><span id="EmailAdd-required" style="color: red;"></span></label>
             <input type="text" id="EmailAdd" name="EmailAdd" placeholder="Email Address*">
 
             <!--Contact-->
-            <label for="ContactNo"></label></br></br>
-            <input type="text" id="ContactNo" name="ContactNo" placeholder="Contact Number">
+            <label for="ContactNo"></label><br>
+            <input type="text" id="ContactNo" name="ContactNo" placeholder="Contact Number"><br>
 
             <!--Password-->
-            <label for="password"></label></br></br>
-            <input type ="password" id="pWord" name="password" placeholder="Password* (6 or more characters long)">
+            <label for="password"><span id="pWord-required" style="color: red;"></span></label>
+            <input type="password" id="pWord" name="password" placeholder="Password* (6 or more characters long)">
 
             <!--Gender-->
-            <p>Gender:*</p>
-            <input type="radio" id="gender" name="male" value="Male">
-            <label for="Male">Male </label>
-            <input type="radio" id="gender" name="female" value="Female">
-            <label for="Female">Female </label>
-            <input type="radio" id="gender" name="ptns" value="PTNS">
-            <label for="PNTS">Prefer Not To Say</label></br></br>
+            <p>Gender:* <span id="gender-required" style="color: red;"></span> </p>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label>
+            <input type="radio" id="ptns" name="gender" value="PTNS">
+            <label for="ptns">Prefer Not To Say</label>
+            </span><br><br>
 
             <!--Campaign Support Reason-->
+            <label for="CSR">Why do you support this campaign?:* <span id="tArea-required" style="color: red;"></span></label><br>
+            <textarea id="tArea" name="CSR" rows="4" cols="50" placeholder="Trees and Earth are Fun!"></textarea><br><br>
 
-            <label for="CSR">Why do you support this campaign?:* </label>
-            </br>
-            <textarea id="tArea" name="CSR" rows="4" cols="50" placeholder="Trees and Earth are Fun!"></textarea>
+            <!--Dropdown-->
+            <label for="Role">Preferred Role: (Choose 1)</label>
+            <select name="roleoption" id="role" >
+                <option value="TF">Training Facilitator</option>
+                <option value="SMCM">Social Media Committee Member</option>
+                <option value="LM">Logistics Member</option>
+                <option value="VC">Volunteer Coordinator</option>
+                <option value="S&FC">Secretariat & Finance Committee</option>
+                <option value="Volunteer" selected>Volunteer</option>
+            </select>
             <br><br>
 
             <!--Sign-Up Button-->
-            <input type="submit" value="Sign Up!" id="submit" onclick="requirement()">
+            <input type="submit" value="Sign Up!" id="submit">
 
         </fieldset>
 
     </form>
+
 <script>
+    function requirement(event) {
+        event.preventDefault(); // Prevent form submission
 
-    function requirement() {
-        var a = document.getElementById("Firstname").value;
-        var b = document.getElementById("Lastname").value;
-        var c = document.getElementById("EmailAdd").value;
-        var d = document.getElementById("pWord").value;
-        var e = document.getElementById("tArea").value;
-        var f = document.getElementById("gender").value;
+        var requiredFields = ['Firstname', 'Lastname', 'EmailAdd', 'pWord', 'tArea',];
+        var isFormValid = true;
 
-        if (a == "") {
-            document.getElementById("Firstname").style.borderColor = "Red";
+        requiredFields.forEach(function(fieldId) {
+            var fieldValue = document.getElementById(fieldId).value.trim();
+            if (fieldValue === "") {
+                document.getElementById(fieldId).style.borderColor = "red";
+                document.getElementById(fieldId + "-required").innerText = "Required";
+                isFormValid = false;
+            } else {
+                document.getElementById(fieldId).style.borderColor = ""; // Reset border color
+                document.getElementById(fieldId + "-required").innerText = ""; // Reset error message
+            }
+        });
+
+        var genderOptions = document.getElementsByName('gender');
+        var genderSelected = false;
+        for (var i = 0; i < genderOptions.length; i++) {
+            if (genderOptions[i].checked) {
+                genderSelected = true;
+                break;
+            }
         }
-        if (b == "") {
-            document.getElementById("Lastname").style.borderColor = "Red";
-        }
-        if (c == "") {
-            document.getElementById("EmailAdd").style.borderColor = "Red";
-        }
-        if (d == "") {
-            document.getElementById("pWord").style.borderColor = "Red";
-        }
-        if (e == "") {
-            document.getElementById("tArea").style.borderColor = "Red";
-        }
-        if (f == "") {
-            document.getElementById("gender").style.borderColor = "Red";
+        if (!genderSelected) {
+            document.getElementById('gender-required').innerText = "Required";
+            isFormValid = false;
+        } else {
+            document.getElementById('gender-required').innerText = ""; // Reset error message
         }
 
+        if (isFormValid) {
+            // All required fields are filled out, proceed to store in local storage
+            var firstName = document.getElementById("Firstname").value;
+            var lastName = document.getElementById("Lastname").value;
+            var email = document.getElementById("EmailAdd").value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var reason = document.getElementById("tArea").value;
+
+            // Store data in local storage
+            localStorage.setItem('firstName', firstName);
+            localStorage.setItem('lastName', lastName);
+            localStorage.setItem('email', email);
+            localStorage.setItem('gender', gender);
+            localStorage.setItem('reason', reason);
+
+            // Optional: Display a confirmation message or redirect to another page
+            alert("Form submitted successfully. Data stored in local storage.");
+        }
+
+        return isFormValid;
     }
-
 </script>        
 
 </body>
