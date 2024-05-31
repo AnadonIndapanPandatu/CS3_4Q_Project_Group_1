@@ -110,7 +110,7 @@
     height: 14vh;
     width: 38vw;
     border: 7px solid black;
-    background-color: #fffec7d8;
+    background-color: #b2ee97;
     position: fixed; left:80px; top:455px; 
     font-family: "Anton", sans-serif;
 }
@@ -135,7 +135,7 @@
     height: 90vh;
     width: 48vw;
     border: 7px solid black;
-    background-color: #fffec7;
+    background-color: #72b852;
     position: fixed; left:575px; top:50px;
     font-family: "Anton", sans-serif; 
 }
@@ -198,4 +198,4 @@
     font-style: normal;
 }
 
-body{background-color: #2e9762;}
+body{background-color: #b2ee97;}

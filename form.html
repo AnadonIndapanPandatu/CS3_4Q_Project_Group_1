@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign-Up Page</title>
+    <link rel="stylesheet" href="style4.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+    </style>
 </head>
 <body>
     
     <form id="Sign-Up" onsubmit="return requirement(event)">
 
-        <fieldset form="Sign-Up">
+        <fieldset form="Sign-Up" id="form>
 
             <!--Name-->
             <label for="Firstname"><span id="Firstname-required" style="color: red;"></span></label>
@@ -58,12 +62,18 @@
 
             <!--Sign-Up Button-->
             <input type="submit" value="Sign Up!" id="submit">
+            <input type="submit" value="Continue" onclick="transfer()">
 
         </fieldset>
 
     </form>
 
 <script>
+
+    function transfer(){
+        window.location.href = "http://127.0.0.1:5500/endpage.html";
+    }
+
     function requirement(event) {
         event.preventDefault(); // Prevent form submission
 
@@ -113,8 +123,10 @@
             localStorage.setItem('reason', reason);
 
             // Optional: Display a confirmation message or redirect to another page
-            alert("Form submitted successfully. Data stored in local storage.");
+            alert("Data saved! Welcome!");
+            window.location.href = "http://127.0.0.1:5500/endpage.html";
         }
+
 
         return isFormValid;
     }
