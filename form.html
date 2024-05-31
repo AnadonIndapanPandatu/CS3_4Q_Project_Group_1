@@ -13,7 +13,7 @@
     
     <form id="Sign-Up" onsubmit="return requirement(event)">
 
-        <fieldset form="Sign-Up" id="form>
+        <fieldset form="Sign-Up" id="form">
 
             <!--Name-->
             <label for="Firstname"><span id="Firstname-required" style="color: red;"></span></label>
@@ -62,17 +62,12 @@
 
             <!--Sign-Up Button-->
             <input type="submit" value="Sign Up!" id="submit">
-            <input type="submit" value="Continue" onclick="transfer()">
 
         </fieldset>
 
     </form>
 
 <script>
-
-    function transfer(){
-        window.location.href = "http://127.0.0.1:5500/endpage.html";
-    }
 
     function requirement(event) {
         event.preventDefault(); // Prevent form submission
